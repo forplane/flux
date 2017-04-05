@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#FFF"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/send"
+        android:layout_width="match_parent"
+        android:text="send"
+        android:padding="8dp"
+        android:gravity="center"
+        android:textColor="#111"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/send1"
+        android:layout_below="@+id/send"
+        android:layout_width="match_parent"
+        android:text="thread"
+        android:padding="8dp"
+        android:gravity="center"
+        android:textColor="#111"
+        android:textSize="18sp"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
