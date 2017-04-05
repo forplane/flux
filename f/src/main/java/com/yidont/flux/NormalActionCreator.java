@@ -3,7 +3,7 @@ package com.yidont.flux;
 
 
 /**
- * Created by jp on 2016/11/3.</br>
+ * Created by jp on 2016/11/3.<p>
  */
 
 public class NormalActionCreator extends ActionsCreatorFactory {

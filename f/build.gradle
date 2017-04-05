@@ -4,7 +4,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 //-------------------------上传到jcenter-----------------------
 
-version = "1.5.1"
+version = "1.0.0"
 
 //-------------------------内网上传需要的-------------------------
 //apply plugin: 'maven'
@@ -17,13 +17,13 @@ version = "1.5.1"
 
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 1703311500
+        targetSdkVersion 25
+        versionCode 1704051500
         versionName version
 
 

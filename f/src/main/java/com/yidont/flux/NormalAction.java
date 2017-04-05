@@ -2,7 +2,7 @@ package com.yidont.flux;
 
 
 /**
- * Created by jp on 2016/11/3.</br>
+ * Created by jp on 2016/11/3.<p>
  * 此类搭配{@link NormalStore}使用
  */
 
