@@ -1,5 +1,6 @@
 package com.example.flux;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.yidont.flux.Dispatcher;
+import com.yidont.flux.FluxOpe;
 import com.yidont.flux.IFluxBaseHelper;
 import com.yidont.flux.NormalActionCreator;
 import com.yidont.flux.NormalStore;
@@ -48,9 +50,9 @@ public class MainActivity extends Activity implements IFluxBaseHelper{
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        NormalActionCreator.get().post(MainActivity.class.getCanonicalName());
                     }
                 }).start();
+                NormalActionCreator.get().post(MainActivity.class.getCanonicalName(),ddd);
 
             }
         });
@@ -59,6 +61,14 @@ public class MainActivity extends Activity implements IFluxBaseHelper{
 //        startService(tent);
 
     }
+
+    private final int ddd=222;
+    @FluxOpe(ope = ddd)
+    public void opeOne(Object event){
+        System.out.println(event.toString());
+    }
+
+
 
     @Override
     public void onViewUpdate(Object event) {

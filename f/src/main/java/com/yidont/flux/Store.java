@@ -5,6 +5,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * Flux的Store模块
  */
@@ -30,6 +33,8 @@ public abstract class Store {
     }
 
 
+
+    //主要用于子线程post作用
     private Handler mHandler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg) {
@@ -49,7 +54,26 @@ public abstract class Store {
                 msg.obj=storeChangeEvent;
                 mHandler.sendMessage(msg);
             }else if( Looper.getMainLooper() == otherLooper){
-                subscriber.onViewUpdate(storeChangeEvent);
+                //没有携带opeType的情况
+                if (storeChangeEvent.opeType == Action.NOACTION_TYPE) {
+                    subscriber.onViewUpdate(storeChangeEvent);
+                }else {
+                    Class<? extends IFluxBaseHelper> aClass = subscriber.getClass();
+                    Method[] methods = aClass.getDeclaredMethods();
+                    for (Method method : methods) {
+                        FluxOpe annotation = method.getAnnotation(FluxOpe.class);
+                        if (annotation != null) {
+                            if (annotation.ope() == storeChangeEvent.opeType) {
+                                try {
+                                    method.invoke(subscriber, storeChangeEvent);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
