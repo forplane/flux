@@ -1,1 +1,1 @@
-include ':app', ':f'
+include ':app', ':flux'
