@@ -32,6 +32,8 @@ public class MainActivity extends Activity implements IFluxBaseHelper{
             public void onClick(View view) {
 
                 NormalActionCreator.get().post(MainActivity.class.getCanonicalName());
+                NormalActionCreator.get().post(MainActivity.class.getCanonicalName(),222);
+                NormalActionCreator.get().post(MainActivity.class.getCanonicalName(),333,"myObj");
 
                 new Thread(new Runnable() {
                     @Override
@@ -94,8 +96,6 @@ public class MainActivity extends Activity implements IFluxBaseHelper{
     public Context getCtx() {
         return this;
     }
-
-
     private Store store;
 
 
