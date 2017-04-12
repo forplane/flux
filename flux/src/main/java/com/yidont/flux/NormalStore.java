@@ -4,10 +4,16 @@ package com.yidont.flux;
 /**
  * Created by jp on 2016/11/3.<p>
  * 此类搭配{@link NormalAction}使用
+ * 引入FluxStore后，此类拒绝使用
  */
-
+@Deprecated
 public class NormalStore extends Store {
 
+
+    @Override
+    protected void emitStoreChange(StoreChangeEvent storeChangeEvent) {
+
+    }
 
     @Override
     public StoreChangeEvent changeEvent(String tag,int opeType) {
@@ -19,7 +25,7 @@ public class NormalStore extends Store {
         onNormalAction((INormalAction) action);
     }
 
-    public void onNormalAction(INormalAction action) {
+    protected void onNormalAction(INormalAction action) {
         int nortype = action.nortype;//这个的类型是来区别是NormalStore需不需要携带数据的
         StoreChangeEvent event = null;
         if (nortype == INormalAction.TYPE_NORMAL_NOTHING) {

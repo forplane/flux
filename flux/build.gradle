@@ -4,7 +4,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 //-------------------------上传到jcenter-----------------------
 
-version = "1.0.0"
+version = "1.0.2"
 
 //-------------------------内网上传需要的-------------------------
 //apply plugin: 'maven'

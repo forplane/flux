@@ -17,7 +17,7 @@ public abstract class Store {
 
 
 
-    protected IFluxBaseHelper subscriber;
+    protected Object subscriber;
 
     protected Store() {
 
@@ -25,7 +25,7 @@ public abstract class Store {
 
 
     public void register(Object subscriber) {
-        this.subscriber = (IFluxBaseHelper) subscriber;
+        this.subscriber = subscriber;
     }
 
     public void unRegister(Object subscriber) {
@@ -34,61 +34,25 @@ public abstract class Store {
 
 
 
-    //主要用于子线程post作用
-    private Handler mHandler = new Handler(Looper.getMainLooper()){
-        @Override
-        public void handleMessage(Message msg) {
-            subscriber.onViewUpdate(msg.obj);
-        }
-    };
+
 
     /**
      * 传入操作类型，然后出发主界面更新
      */
-    public void emitStoreChange(final StoreChangeEvent storeChangeEvent) {
-        //通知订阅者更新，并携带数据
-        if (subscriber != null) {
-            Looper otherLooper = Looper.myLooper();
-            if (Looper.myLooper() == null) {
-                Message msg = Message.obtain(mHandler);
-                msg.obj=storeChangeEvent;
-                mHandler.sendMessage(msg);
-            }else if( Looper.getMainLooper() == otherLooper){
-                //没有携带opeType的情况
-                if (storeChangeEvent.opeType == Action.NOACTION_TYPE) {
-                    subscriber.onViewUpdate(storeChangeEvent);
-                }else {
-                    Class<? extends IFluxBaseHelper> aClass = subscriber.getClass();
-                    Method[] methods = aClass.getDeclaredMethods();
-                    for (Method method : methods) {
-                        FluxOpe annotation = method.getAnnotation(FluxOpe.class);
-                        if (annotation != null) {
-                            if (annotation.ope() == storeChangeEvent.opeType) {
-                                try {
-                                    method.invoke(subscriber, storeChangeEvent);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    protected abstract  void emitStoreChange(final StoreChangeEvent storeChangeEvent);
+
 
     /**
      * 传入操作类型，然后出发主界面更新
      *
      * @param tag
      */
-    public void emitStoreChange(String tag, int opeType) {
+    protected void emitStoreChange(String tag, int opeType) {
         //根据类型得到具体的Event对象
         emitStoreChange(changeEvent(tag, opeType));
     }
 
-    public abstract StoreChangeEvent changeEvent(String tag, int opeType);
+    protected abstract StoreChangeEvent changeEvent(String tag, int opeType);
 
     /**
      * 所有逻辑的处理，在实现类中可以简单想象成对应着一个Activity（View）的增删改查的处理

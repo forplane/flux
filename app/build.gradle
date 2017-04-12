@@ -21,5 +21,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':flux')
-
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

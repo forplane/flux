@@ -12,5 +12,18 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)//在运行时可以获取
 @Target({ElementType.METHOD})//作用到方法上面
 public @interface FluxOpe {
+    /**
+     * 操作符默认方法的ope标签值
+     */
+    int DEFOPE=9999;
+
+    /**
+     * @return 操作标签
+     */
     int ope();
+
+    /**
+     * @return 是否为操作默认（既是不指定ope），默认为false
+     */
+    boolean def() default false;
 }

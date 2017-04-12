@@ -1,7 +1,6 @@
 package com.example.flux;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +12,7 @@ import com.yidont.flux.NormalActionCreator;
 import rx.functions.Action1;
 
 
-public class MainActivity extends Activity{
+public class BActivity extends Activity{
 
     private TextView ttt;
 
@@ -26,17 +25,14 @@ public class MainActivity extends Activity{
         ttt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NormalActionCreator.get().post(MainActivity.class.getCanonicalName(),ddd,"234234");
                 NormalActionCreator.get().post(BActivity.class.getCanonicalName(),ddd,"234234");
-
             }
         });
         findViewById(R.id.send1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent tent = new Intent(getBaseContext(), BActivity.class);
-                startActivity(tent);
+//                RxBus.getDefault().post("Main",111,"11111");
             }
         });
 
