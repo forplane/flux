@@ -1,5 +1,6 @@
 package com.yidont.flux;
 
+import java.io.Flushable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Flux {
     static volatile Flux defaultInstance;
     private static final Map<Class<?>, List<Method>> METHOD_CACHE = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, FluxStore> SUBSTORE = new ConcurrentHashMap<>();
 
 
     /**
@@ -42,7 +44,16 @@ public class Flux {
             methods=findUsingReflection(aClass);
             METHOD_CACHE.put(aClass, methods);
         }
-        Dispatcher.get().register(subscriber, new FluxStore(methods));
+
+        FluxStore fluxStore = new FluxStore(methods);
+        SUBSTORE.put(aClass, fluxStore);
+        Dispatcher.get().register(subscriber, fluxStore);
+    }
+
+    public void unregister(Object subscriber) {
+        Class<?> aClass = subscriber.getClass();
+        FluxStore fluxStore = SUBSTORE.get(aClass);
+        Dispatcher.get().unregister(subscriber,fluxStore);
     }
 
     private List<Method> findUsingReflection(Class<?> aClass){
